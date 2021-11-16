@@ -23,7 +23,7 @@ class KitCasinoSpeiseplan:
     def convertToImage(self):
         doc = fitz.open(self.filenameDeutsch)
         page = doc.loadPage(0)
-        pix = page.getPixmap(matrix=fitz.Matrix(1.5, 1.5))
+        pix = page.getPixmap(matrix=fitz.Matrix(3, 3))   
         pix.writePNG(f"{self.filenameDeutsch}.png")
         self.image=cv2.imread(f"{self.filenameDeutsch}.png")
 
@@ -35,7 +35,7 @@ class KitCasinoSpeiseplan:
             rois_day = roi_helper.draw_rectangle(self.image, 5)
             self.rois[day]=rois_day
         with open('rois.pickle', 'wb') as handle:
-            pickle.dump(self.rois, handle, protocol=pickle.HIGHEST_PROTOCOL)
+            pickle.dump(self.rois, handle, protocol=4)
     
     def getRois(self):
         with open('rois.pickle', 'rb') as handle:
@@ -64,6 +64,7 @@ class KitCasinoSpeiseplan:
 if __name__ == "__main__":
     speiseplan=KitCasinoSpeiseplan()
     speiseplan.downloadSpeiseplan()
+    #speiseplan.setRois()
     speiseplan.getRois()
     speiseplan.parseSpeiseplan()
 # %%
