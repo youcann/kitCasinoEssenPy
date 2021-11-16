@@ -8,6 +8,7 @@ import fitz
 import cv2
 import pytesseract
 from EasyROI import EasyROI
+import re
 import pickle
 
 days=["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
@@ -55,6 +56,8 @@ class KitCasinoSpeiseplan:
                 w=roi["roi"][i]["w"]
                 h=roi["roi"][i]["h"]
                 essen=pytesseract.image_to_string(self.image[y:y+h,x:x+w],lang='deu')
+                essen=essen.replace('\n', ' ').replace('\r', '') #remove newlines
+                essen=re.sub(' +',' ',essen) #remove multiple spaces
                 print(f"Essen({day}, {i}): {essen}")
 
 
