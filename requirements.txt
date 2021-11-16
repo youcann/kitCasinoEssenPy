@@ -1,0 +1,5 @@
+EasyROI==1.0.3
+opencv_python==4.5.1.48
+PyMuPDF==1.16.14
+pytesseract==0.3.8
+requests==2.22.0
